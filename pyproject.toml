@@ -1,0 +1,50 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "conformvault-sdk"
+version = "0.1.0"
+description = "Python SDK for the ConformVault Developer API"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.9"
+authors = [
+    { name = "SecuAAS", email = "dev@secuaas.com" },
+]
+keywords = ["conformvault", "api", "sdk", "file-storage", "secure"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Typing :: Typed",
+]
+dependencies = [
+    "httpx>=0.24.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.21",
+    "anyio[trio]>=3.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/secuaas/conformvault-sdk-python"
+Documentation = "https://rtfm.secuaas.dev/books/conformvault-secure-file-storage"
+Repository = "https://github.com/secuaas/conformvault-sdk-python"
+Issues = "https://github.com/secuaas/conformvault-sdk-python/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["conformvault"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"

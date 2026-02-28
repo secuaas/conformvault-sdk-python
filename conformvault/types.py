@@ -290,3 +290,37 @@ class CreateAPIKeyResponse:
     expires_at: Optional[str] = None
     created_at: str = ""
     key: str = ""
+
+
+# ---------------------------------------------------------------------------
+# Scan Reports
+# ---------------------------------------------------------------------------
+
+@dataclass
+class FileScanReport:
+    """A ClamAV scan report for a file."""
+
+    id: str = ""
+    file_id: str = ""
+    organization_id: str = ""
+    scan_engine: str = ""
+    engine_version: Optional[str] = None
+    scan_status: str = ""
+    threat_name: Optional[str] = None
+    file_size: Optional[int] = None
+    mime_type: Optional[str] = None
+    scan_duration_ms: Optional[int] = None
+    scanned_at: str = ""
+
+
+@dataclass
+class FileScanSummary:
+    """Summary of scan statistics for an organization."""
+
+    total_scans: int = 0
+    clean_count: int = 0
+    infected_count: int = 0
+    error_count: int = 0
+    skipped_count: int = 0
+    scan_engine: str = ""
+    engine_version: str = ""

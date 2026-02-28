@@ -10,7 +10,7 @@ import httpx
 from .errors import APIError, AuthenticationError, ConformVaultError, RateLimitError
 
 DEFAULT_BASE_URL = "https://api.conformvault.com/dev/v1"
-VERSION = "0.1.0"
+VERSION = "0.3.0"
 USER_AGENT = f"conformvault-python/{VERSION}"
 
 T = TypeVar("T")
@@ -248,6 +248,8 @@ from .bulk import AsyncBulkService, BulkService  # noqa: E402
 from .versions import AsyncVersionsService, VersionsService  # noqa: E402
 from .search import AsyncSearchService, SearchService  # noqa: E402
 from .trash import AsyncTrashService, TrashService  # noqa: E402
+from .scan_reports import AsyncScanReportsService, ScanReportsService  # noqa: E402
+from .attestation import AsyncAttestationService, AttestationService  # noqa: E402
 
 
 class ConformVault:
@@ -280,6 +282,8 @@ class ConformVault:
         self.versions = VersionsService(self._http)
         self.search = SearchService(self._http)
         self.trash = TrashService(self._http)
+        self.scan_reports = ScanReportsService(self._http)
+        self.attestation = AttestationService(self._http)
 
     def close(self) -> None:
         """Close the underlying HTTP client."""
@@ -322,6 +326,8 @@ class AsyncConformVault:
         self.versions = AsyncVersionsService(self._http)
         self.search = AsyncSearchService(self._http)
         self.trash = AsyncTrashService(self._http)
+        self.scan_reports = AsyncScanReportsService(self._http)
+        self.attestation = AsyncAttestationService(self._http)
 
     async def close(self) -> None:
         """Close the underlying async HTTP client."""

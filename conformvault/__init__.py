@@ -35,6 +35,8 @@ from .types import (
     CreateSignatureSigner,
     DataResponse,
     File,
+    FileScanReport,
+    FileScanSummary,
     FileVersion,
     Folder,
     ListResponse,
@@ -93,6 +95,9 @@ __all__ = [
     # Types — Search
     "SearchResult",
     "SearchPagination",
+    # Types — Scan Reports
+    "FileScanReport",
+    "FileScanSummary",
     # Types — Generic
     "ListResponse",
     "DataResponse",

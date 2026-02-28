@@ -237,6 +237,47 @@ class CreateAPIKeyRequest:
     scopes: List[str] = field(default_factory=list)
 
 
+# ---------------------------------------------------------------------------
+# File Versions
+# ---------------------------------------------------------------------------
+
+@dataclass
+class FileVersion:
+    """A version of a file."""
+
+    id: str = ""
+    file_id: str = ""
+    version: int = 0
+    size: int = 0
+    created_at: str = ""
+
+
+# ---------------------------------------------------------------------------
+# Search
+# ---------------------------------------------------------------------------
+
+@dataclass
+class SearchResult:
+    """A single search result."""
+
+    id: str = ""
+    type: str = ""  # "file" or "folder"
+    name: str = ""
+    path: str = ""
+    size: int = 0
+    content_type: str = ""
+    created_at: str = ""
+
+
+@dataclass
+class SearchPagination:
+    """Pagination metadata for search results."""
+
+    page: int = 0
+    page_size: int = 0
+    total: int = 0
+
+
 @dataclass
 class CreateAPIKeyResponse:
     """Response from creating an API key; includes the full key (shown once)."""

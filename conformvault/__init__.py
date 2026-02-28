@@ -35,11 +35,14 @@ from .types import (
     CreateSignatureSigner,
     DataResponse,
     File,
+    FileVersion,
     Folder,
     ListResponse,
     MessageResponse,
     RegisterWebhookRequest,
     RegisterWebhookResponse,
+    SearchPagination,
+    SearchResult,
     ShareLink,
     SignatureEnvelope,
     UploadResult,
@@ -85,6 +88,11 @@ __all__ = [
     "APIKey",
     "CreateAPIKeyRequest",
     "CreateAPIKeyResponse",
+    # Types — File Versions
+    "FileVersion",
+    # Types — Search
+    "SearchResult",
+    "SearchPagination",
     # Types — Generic
     "ListResponse",
     "DataResponse",

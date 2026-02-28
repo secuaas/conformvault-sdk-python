@@ -244,6 +244,10 @@ from .signatures import AsyncSignaturesService, SignaturesService  # noqa: E402
 from .webhooks import AsyncWebhooksService, WebhooksService  # noqa: E402
 from .audit import AsyncAuditService, AuditService  # noqa: E402
 from .keys import AsyncKeysService, KeysService  # noqa: E402
+from .bulk import AsyncBulkService, BulkService  # noqa: E402
+from .versions import AsyncVersionsService, VersionsService  # noqa: E402
+from .search import AsyncSearchService, SearchService  # noqa: E402
+from .trash import AsyncTrashService, TrashService  # noqa: E402
 
 
 class ConformVault:
@@ -272,6 +276,10 @@ class ConformVault:
         self.webhooks = WebhooksService(self._http)
         self.audit = AuditService(self._http)
         self.keys = KeysService(self._http)
+        self.bulk = BulkService(self._http)
+        self.versions = VersionsService(self._http)
+        self.search = SearchService(self._http)
+        self.trash = TrashService(self._http)
 
     def close(self) -> None:
         """Close the underlying HTTP client."""
@@ -310,6 +318,10 @@ class AsyncConformVault:
         self.webhooks = AsyncWebhooksService(self._http)
         self.audit = AsyncAuditService(self._http)
         self.keys = AsyncKeysService(self._http)
+        self.bulk = AsyncBulkService(self._http)
+        self.versions = AsyncVersionsService(self._http)
+        self.search = AsyncSearchService(self._http)
+        self.trash = AsyncTrashService(self._http)
 
     async def close(self) -> None:
         """Close the underlying async HTTP client."""

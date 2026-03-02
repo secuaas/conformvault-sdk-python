@@ -1,11 +1,30 @@
 # Historique des Versions - ConformVault Python SDK
 
 ## Version Actuelle
-**0.3.0** - 2026-02-27
+**0.4.0** - 2026-03-02
 
 ---
 
 ## Versions
+
+### 0.4.0 - 2026-03-02
+**Commit:** `da2d78f`
+**Type:** Minor - Transactions, Templates, Batches services
+
+### Ajouté
+- **`transactions.py`**: `TransactionsService` / `AsyncTransactionsService` — create, list, get, update, delete, add_item, update_item, delete_item (8 methods each)
+- **`templates.py`**: `TemplatesService` / `AsyncTemplatesService` — create, list, get, update, delete, generate (binary PDF), list_documents (7 methods each)
+- **`batches.py`**: `BatchesService` / `AsyncBatchesService` — create, list, get, commit, cancel (5 methods each)
+- New types in `types.py`: `TransactionFolder`, `TransactionFolderItem`, `TransactionProgress`, `DocumentTemplate`, `GeneratedDocument`, `BatchOperation`, `BatchOperationItem`
+- Services registered as `client.transactions`, `client.templates`, `client.batches` in both `ConformVault` and `AsyncConformVault`
+- Types exported from `__init__.py`
+- Total services: 13 → 16
+
+### Tests effectués
+- ✅ `python3 -c "import conformvault"` — success
+- ✅ 16 services verified on sync client
+
+---
 
 ### 0.3.0 - 2026-02-27
 **Type:** Minor - ScanReports and Attestation services

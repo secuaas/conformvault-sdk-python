@@ -324,3 +324,109 @@ class FileScanSummary:
     skipped_count: int = 0
     scan_engine: str = ""
     engine_version: str = ""
+
+
+# ---------------------------------------------------------------------------
+# Transaction Folders
+# ---------------------------------------------------------------------------
+
+@dataclass
+class TransactionProgress:
+    """Completion statistics for a transaction folder."""
+
+    total: int = 0
+    completed: int = 0
+    pending: int = 0
+
+
+@dataclass
+class TransactionFolderItem:
+    """A single item in a transaction folder."""
+
+    id: str = ""
+    transaction_id: str = ""
+    label: str = ""
+    description: Optional[str] = None
+    required: bool = False
+    status: str = ""
+    file_id: Optional[str] = None
+    created_at: str = ""
+    updated_at: str = ""
+
+
+@dataclass
+class TransactionFolder:
+    """A transaction folder."""
+
+    id: str = ""
+    name: str = ""
+    description: Optional[str] = None
+    status: str = ""
+    due_date: Optional[str] = None
+    progress: Optional[Any] = None
+    items: List[Any] = field(default_factory=list)
+    created_at: str = ""
+    updated_at: str = ""
+
+
+# ---------------------------------------------------------------------------
+# Document Templates
+# ---------------------------------------------------------------------------
+
+@dataclass
+class DocumentTemplate:
+    """A document template."""
+
+    id: str = ""
+    name: str = ""
+    description: Optional[str] = None
+    content_type: str = ""
+    fields: List[str] = field(default_factory=list)
+    created_at: str = ""
+    updated_at: str = ""
+
+
+@dataclass
+class GeneratedDocument:
+    """A document generated from a template."""
+
+    id: str = ""
+    template_id: str = ""
+    name: str = ""
+    size: int = 0
+    status: str = ""
+    file_id: str = ""
+    created_at: str = ""
+
+
+# ---------------------------------------------------------------------------
+# Batch Operations
+# ---------------------------------------------------------------------------
+
+@dataclass
+class BatchOperationItem:
+    """A single item within a batch operation."""
+
+    id: str = ""
+    index: int = 0
+    filename: str = ""
+    size: int = 0
+    mime_type: str = ""
+    status: str = ""
+    file_id: Optional[str] = None
+    error: Optional[str] = None
+
+
+@dataclass
+class BatchOperation:
+    """A batch operation."""
+
+    id: str = ""
+    status: str = ""
+    type: str = ""
+    total: int = 0
+    completed: int = 0
+    failed: int = 0
+    items: List[Any] = field(default_factory=list)
+    created_at: str = ""
+    updated_at: str = ""

@@ -27,6 +27,8 @@ from .errors import (
 from .types import (
     APIKey,
     AuditEntry,
+    BatchOperation,
+    BatchOperationItem,
     CreateAPIKeyRequest,
     CreateAPIKeyResponse,
     CreateFolderRequest,
@@ -34,11 +36,13 @@ from .types import (
     CreateSignatureRequest,
     CreateSignatureSigner,
     DataResponse,
+    DocumentTemplate,
     File,
     FileScanReport,
     FileScanSummary,
     FileVersion,
     Folder,
+    GeneratedDocument,
     ListResponse,
     MessageResponse,
     RegisterWebhookRequest,
@@ -47,6 +51,9 @@ from .types import (
     SearchResult,
     ShareLink,
     SignatureEnvelope,
+    TransactionFolder,
+    TransactionFolderItem,
+    TransactionProgress,
     UploadResult,
     WebhookEndpoint,
 )
@@ -98,6 +105,16 @@ __all__ = [
     # Types — Scan Reports
     "FileScanReport",
     "FileScanSummary",
+    # Types — Transactions
+    "TransactionFolder",
+    "TransactionFolderItem",
+    "TransactionProgress",
+    # Types — Templates
+    "DocumentTemplate",
+    "GeneratedDocument",
+    # Types — Batches
+    "BatchOperation",
+    "BatchOperationItem",
     # Types — Generic
     "ListResponse",
     "DataResponse",

@@ -250,6 +250,9 @@ from .search import AsyncSearchService, SearchService  # noqa: E402
 from .trash import AsyncTrashService, TrashService  # noqa: E402
 from .scan_reports import AsyncScanReportsService, ScanReportsService  # noqa: E402
 from .attestation import AsyncAttestationService, AttestationService  # noqa: E402
+from .transactions import AsyncTransactionsService, TransactionsService  # noqa: E402
+from .templates import AsyncTemplatesService, TemplatesService  # noqa: E402
+from .batches import AsyncBatchesService, BatchesService  # noqa: E402
 
 
 class ConformVault:
@@ -284,6 +287,9 @@ class ConformVault:
         self.trash = TrashService(self._http)
         self.scan_reports = ScanReportsService(self._http)
         self.attestation = AttestationService(self._http)
+        self.transactions = TransactionsService(self._http)
+        self.templates = TemplatesService(self._http)
+        self.batches = BatchesService(self._http)
 
     def close(self) -> None:
         """Close the underlying HTTP client."""
@@ -328,6 +334,9 @@ class AsyncConformVault:
         self.trash = AsyncTrashService(self._http)
         self.scan_reports = AsyncScanReportsService(self._http)
         self.attestation = AsyncAttestationService(self._http)
+        self.transactions = AsyncTransactionsService(self._http)
+        self.templates = AsyncTemplatesService(self._http)
+        self.batches = AsyncBatchesService(self._http)
 
     async def close(self) -> None:
         """Close the underlying async HTTP client."""

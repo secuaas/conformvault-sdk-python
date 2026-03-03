@@ -1,11 +1,23 @@
 # Historique des Versions - ConformVault Python SDK
 
 ## Version Actuelle
-**0.4.0** - 2026-03-02
+**0.4.1** - 2026-03-03
 
 ---
 
 ## Versions
+
+### 0.4.1 - 2026-03-03
+**Commit:** `5494f69`
+**Type:** Patch - Add CHANGELOG.md
+
+### Ajouté
+- `CHANGELOG.md` — Keep a Changelog format, extracted from VERSION.md history
+
+### Tests effectués
+- ✅ `python3 -c "import conformvault"` — success
+
+---
 
 ### 0.4.0 - 2026-03-02
 **Commit:** `da2d78f`

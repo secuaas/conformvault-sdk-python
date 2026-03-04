@@ -7,7 +7,7 @@ import hmac
 from typing import List
 
 from .client import _AsyncHTTP, _SyncHTTP, _from_dict, _from_dict_list
-from .types import RegisterWebhookRequest, RegisterWebhookResponse, WebhookEndpoint
+from .types import RegisterWebhookRequest, RegisterWebhookResponse, WebhookDelivery, WebhookEndpoint
 
 
 class WebhooksService:
@@ -34,6 +34,24 @@ class WebhooksService:
         """Send a test event to a webhook endpoint."""
         self._http.request_json("POST", f"/webhooks/{webhook_id}/test")
 
+    def list_deliveries(self, webhook_id: str) -> List[WebhookDelivery]:
+        """List delivery attempts for a webhook endpoint."""
+        resp = self._http.request_json("GET", f"/webhooks/{webhook_id}/deliveries")
+        return _from_dict_list(WebhookDelivery, resp.get("data", []) if resp else [])
+
+    def get_delivery(self, webhook_id: str, delivery_id: str) -> WebhookDelivery:
+        """Get a single webhook delivery by ID."""
+        resp = self._http.request_json("GET", f"/webhooks/{webhook_id}/deliveries/{delivery_id}")
+        return _from_dict(WebhookDelivery, resp.get("data") if resp else None)
+
+    def replay_delivery(self, webhook_id: str, delivery_id: str) -> None:
+        """Replay a webhook delivery."""
+        self._http.request_json("POST", f"/webhooks/{webhook_id}/deliveries/{delivery_id}/replay")
+
+    def re_enable(self, webhook_id: str) -> None:
+        """Re-enable a disabled webhook endpoint."""
+        self._http.request_json("POST", f"/webhooks/{webhook_id}/enable")
+
 
 class AsyncWebhooksService:
     """Asynchronous webhook endpoint management."""
@@ -54,6 +72,20 @@ class AsyncWebhooksService:
 
     async def test(self, webhook_id: str) -> None:
         await self._http.request_json("POST", f"/webhooks/{webhook_id}/test")
+
+    async def list_deliveries(self, webhook_id: str) -> List[WebhookDelivery]:
+        resp = await self._http.request_json("GET", f"/webhooks/{webhook_id}/deliveries")
+        return _from_dict_list(WebhookDelivery, resp.get("data", []) if resp else [])
+
+    async def get_delivery(self, webhook_id: str, delivery_id: str) -> WebhookDelivery:
+        resp = await self._http.request_json("GET", f"/webhooks/{webhook_id}/deliveries/{delivery_id}")
+        return _from_dict(WebhookDelivery, resp.get("data") if resp else None)
+
+    async def replay_delivery(self, webhook_id: str, delivery_id: str) -> None:
+        await self._http.request_json("POST", f"/webhooks/{webhook_id}/deliveries/{delivery_id}/replay")
+
+    async def re_enable(self, webhook_id: str) -> None:
+        await self._http.request_json("POST", f"/webhooks/{webhook_id}/enable")
 
 
 def verify_webhook_signature(payload: bytes | str, signature_header: str, secret: str) -> bool:

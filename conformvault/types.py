@@ -8,7 +8,7 @@ can parse them with ``datetime.fromisoformat()`` when needed.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Generic, List, Optional, TypeVar
+from typing import Any, Dict, Generic, List, Optional, TypeVar
 
 T = TypeVar("T")
 
@@ -430,3 +430,364 @@ class BatchOperation:
     items: List[Any] = field(default_factory=list)
     created_at: str = ""
     updated_at: str = ""
+
+
+# ---------------------------------------------------------------------------
+# Webhook Deliveries
+# ---------------------------------------------------------------------------
+
+@dataclass
+class WebhookDelivery:
+    """A webhook delivery attempt."""
+
+    id: str = ""
+    webhook_id: str = ""
+    event_type: str = ""
+    status: str = ""
+    http_status: int = 0
+    request_body: str = ""
+    response_body: str = ""
+    created_at: str = ""
+    delivered_at: Optional[str] = None
+
+
+# ---------------------------------------------------------------------------
+# Audit extended types
+# ---------------------------------------------------------------------------
+
+@dataclass
+class AuditStats:
+    """Audit log statistics."""
+
+    total_events: int = 0
+    events_by_type: Optional[Dict[str, int]] = None
+    events_by_day: Optional[Dict[str, int]] = None
+
+
+@dataclass
+class AuditAnomaly:
+    """An audit anomaly detection."""
+
+    id: str = ""
+    type: str = ""
+    description: str = ""
+    severity: str = ""
+    detected_at: str = ""
+
+
+# ---------------------------------------------------------------------------
+# File Metadata & Tags
+# ---------------------------------------------------------------------------
+
+@dataclass
+class FileTag:
+    """A tag on a file."""
+
+    tag: str = ""
+    created_at: str = ""
+
+
+@dataclass
+class AddTagsRequest:
+    """Input for adding tags to a file."""
+
+    tags: List[str] = field(default_factory=list)
+
+
+@dataclass
+class SetMetadataRequest:
+    """Input for setting custom metadata on a file."""
+
+    metadata: Optional[Dict[str, str]] = None
+
+
+# ---------------------------------------------------------------------------
+# Retention Policies
+# ---------------------------------------------------------------------------
+
+@dataclass
+class RetentionPolicy:
+    """A retention policy."""
+
+    id: str = ""
+    name: str = ""
+    retention_days: int = 0
+    auto_delete: bool = False
+    created_at: str = ""
+    updated_at: str = ""
+
+
+@dataclass
+class CreateRetentionPolicyRequest:
+    """Input for creating a retention policy."""
+
+    name: str = ""
+    retention_days: int = 0
+    auto_delete: bool = False
+
+
+@dataclass
+class UpdateRetentionPolicyRequest:
+    """Input for updating a retention policy."""
+
+    name: Optional[str] = None
+    retention_days: Optional[int] = None
+    auto_delete: Optional[bool] = None
+
+
+# ---------------------------------------------------------------------------
+# Legal Holds
+# ---------------------------------------------------------------------------
+
+@dataclass
+class LegalHold:
+    """A legal hold."""
+
+    id: str = ""
+    name: str = ""
+    description: str = ""
+    status: str = ""
+    file_count: int = 0
+    created_at: str = ""
+    released_at: Optional[str] = None
+
+
+@dataclass
+class CreateLegalHoldRequest:
+    """Input for creating a legal hold."""
+
+    name: str = ""
+    description: Optional[str] = None
+
+
+@dataclass
+class AddLegalHoldFilesRequest:
+    """Input for adding files to a legal hold."""
+
+    file_ids: List[str] = field(default_factory=list)
+
+
+@dataclass
+class LegalHoldFile:
+    """A file within a legal hold."""
+
+    file_id: str = ""
+    added_at: str = ""
+
+
+# ---------------------------------------------------------------------------
+# Folder Permissions
+# ---------------------------------------------------------------------------
+
+@dataclass
+class FolderPermission:
+    """A folder permission entry."""
+
+    folder_id: str = ""
+    user_id: str = ""
+    permission: str = ""
+    granted_at: str = ""
+
+
+@dataclass
+class SetFolderPermissionRequest:
+    """Input for setting a folder permission."""
+
+    user_id: str = ""
+    permission: str = ""
+
+
+# ---------------------------------------------------------------------------
+# Comments
+# ---------------------------------------------------------------------------
+
+@dataclass
+class Comment:
+    """A comment on a file."""
+
+    id: str = ""
+    file_id: str = ""
+    content: str = ""
+    author_id: str = ""
+    parent_id: Optional[str] = None
+    created_at: str = ""
+    updated_at: str = ""
+
+
+@dataclass
+class CreateCommentRequest:
+    """Input for creating a comment."""
+
+    content: str = ""
+    parent_id: Optional[str] = None
+
+
+@dataclass
+class UpdateCommentRequest:
+    """Input for updating a comment."""
+
+    content: str = ""
+
+
+# ---------------------------------------------------------------------------
+# Quota
+# ---------------------------------------------------------------------------
+
+@dataclass
+class QuotaInfo:
+    """Quota usage information."""
+
+    used_bytes: int = 0
+    total_bytes: int = 0
+    file_count: int = 0
+    max_file_count: int = 0
+
+
+# ---------------------------------------------------------------------------
+# Rate Limit
+# ---------------------------------------------------------------------------
+
+@dataclass
+class RateLimitInfo:
+    """Rate limit status information."""
+
+    requests_per_minute: int = 0
+    requests_remaining: int = 0
+    reset_at: str = ""
+
+
+# ---------------------------------------------------------------------------
+# Upload Sessions
+# ---------------------------------------------------------------------------
+
+@dataclass
+class UploadSession:
+    """A chunked upload session."""
+
+    id: str = ""
+    filename: str = ""
+    total_size: int = 0
+    chunk_size: int = 0
+    chunks_uploaded: int = 0
+    total_chunks: int = 0
+    status: str = ""
+    created_at: str = ""
+    expires_at: str = ""
+
+
+@dataclass
+class CreateUploadSessionRequest:
+    """Input for creating a chunked upload session."""
+
+    filename: str = ""
+    total_size: int = 0
+    content_type: Optional[str] = None
+    folder_id: Optional[str] = None
+
+
+# ---------------------------------------------------------------------------
+# Jobs
+# ---------------------------------------------------------------------------
+
+@dataclass
+class Job:
+    """A background job."""
+
+    id: str = ""
+    type: str = ""
+    status: str = ""
+    progress: int = 0
+    result: Optional[Any] = None
+    error: Optional[str] = None
+    created_at: str = ""
+    completed_at: Optional[str] = None
+
+
+@dataclass
+class CreateJobRequest:
+    """Input for creating a background job."""
+
+    type: str = ""
+    params: Optional[Dict[str, Any]] = None
+
+
+# ---------------------------------------------------------------------------
+# Activity Subscriptions
+# ---------------------------------------------------------------------------
+
+@dataclass
+class ActivitySubscription:
+    """An activity event subscription."""
+
+    id: str = ""
+    event_types: List[str] = field(default_factory=list)
+    callback_url: str = ""
+    created_at: str = ""
+
+
+@dataclass
+class CreateActivitySubscriptionRequest:
+    """Input for creating an activity subscription."""
+
+    event_types: List[str] = field(default_factory=list)
+    callback_url: str = ""
+
+
+# ---------------------------------------------------------------------------
+# IP Policy
+# ---------------------------------------------------------------------------
+
+@dataclass
+class IPPolicy:
+    """IP access policy."""
+
+    enabled: bool = False
+    allowed_ips: List[str] = field(default_factory=list)
+    denied_ips: List[str] = field(default_factory=list)
+
+
+@dataclass
+class SetIPPolicyRequest:
+    """Input for setting IP access policy."""
+
+    enabled: bool = False
+    allowed_ips: Optional[List[str]] = None
+    denied_ips: Optional[List[str]] = None
+
+
+# ---------------------------------------------------------------------------
+# MFA Policy
+# ---------------------------------------------------------------------------
+
+@dataclass
+class MFAPolicy:
+    """MFA policy configuration."""
+
+    enabled: bool = False
+    required_for: List[str] = field(default_factory=list)
+
+
+@dataclass
+class SetMFAPolicyRequest:
+    """Input for setting MFA policy."""
+
+    enabled: bool = False
+    required_for: Optional[List[str]] = None
+
+
+# ---------------------------------------------------------------------------
+# Encryption Salt
+# ---------------------------------------------------------------------------
+
+@dataclass
+class EncryptionSalt:
+    """Encryption salt value."""
+
+    salt: str = ""
+
+
+@dataclass
+class SetEncryptionSaltRequest:
+    """Input for setting encryption salt."""
+
+    salt: str = ""

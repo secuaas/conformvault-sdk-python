@@ -10,7 +10,7 @@ import httpx
 from .errors import APIError, AuthenticationError, ConformVaultError, RateLimitError
 
 DEFAULT_BASE_URL = "https://api.conformvault.com/dev/v1"
-VERSION = "0.4.0"
+VERSION = "0.5.0"
 USER_AGENT = f"conformvault-python/{VERSION}"
 
 T = TypeVar("T")
@@ -253,6 +253,16 @@ from .attestation import AsyncAttestationService, AttestationService  # noqa: E4
 from .transactions import AsyncTransactionsService, TransactionsService  # noqa: E402
 from .templates import AsyncTemplatesService, TemplatesService  # noqa: E402
 from .batches import AsyncBatchesService, BatchesService  # noqa: E402
+from .metadata import AsyncMetadataService, MetadataService  # noqa: E402
+from .retention import AsyncRetentionService, RetentionService  # noqa: E402
+from .legal_holds import AsyncLegalHoldsService, LegalHoldsService  # noqa: E402
+from .permissions import AsyncPermissionsService, PermissionsService  # noqa: E402
+from .comments import AsyncCommentsService, CommentsService  # noqa: E402
+from .quota import AsyncQuotaService, AsyncRateLimitService, QuotaService, RateLimitService  # noqa: E402
+from .upload_sessions import AsyncUploadSessionsService, UploadSessionsService  # noqa: E402
+from .jobs import AsyncJobsService, JobsService  # noqa: E402
+from .activity_subscriptions import AsyncActivitySubscriptionsService, ActivitySubscriptionsService  # noqa: E402
+from .policies import AsyncPoliciesService, PoliciesService  # noqa: E402
 
 
 class ConformVault:
@@ -290,6 +300,17 @@ class ConformVault:
         self.transactions = TransactionsService(self._http)
         self.templates = TemplatesService(self._http)
         self.batches = BatchesService(self._http)
+        self.metadata = MetadataService(self._http)
+        self.retention = RetentionService(self._http)
+        self.legal_holds = LegalHoldsService(self._http)
+        self.permissions = PermissionsService(self._http)
+        self.comments = CommentsService(self._http)
+        self.quota = QuotaService(self._http)
+        self.rate_limit = RateLimitService(self._http)
+        self.upload_sessions = UploadSessionsService(self._http)
+        self.jobs = JobsService(self._http)
+        self.activity_subscriptions = ActivitySubscriptionsService(self._http)
+        self.policies = PoliciesService(self._http)
 
     def close(self) -> None:
         """Close the underlying HTTP client."""
@@ -337,6 +358,17 @@ class AsyncConformVault:
         self.transactions = AsyncTransactionsService(self._http)
         self.templates = AsyncTemplatesService(self._http)
         self.batches = AsyncBatchesService(self._http)
+        self.metadata = AsyncMetadataService(self._http)
+        self.retention = AsyncRetentionService(self._http)
+        self.legal_holds = AsyncLegalHoldsService(self._http)
+        self.permissions = AsyncPermissionsService(self._http)
+        self.comments = AsyncCommentsService(self._http)
+        self.quota = AsyncQuotaService(self._http)
+        self.rate_limit = AsyncRateLimitService(self._http)
+        self.upload_sessions = AsyncUploadSessionsService(self._http)
+        self.jobs = AsyncJobsService(self._http)
+        self.activity_subscriptions = AsyncActivitySubscriptionsService(self._http)
+        self.policies = AsyncPoliciesService(self._http)
 
     async def close(self) -> None:
         """Close the underlying async HTTP client."""

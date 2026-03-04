@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import BinaryIO, Dict, List, Optional, Union
+from typing import Any, BinaryIO, Dict, List, Optional, Union
 
 from .client import _AsyncHTTP, _SyncHTTP, _from_dict, _from_dict_list
 from .types import File, UploadResult
@@ -64,6 +64,15 @@ class FilesService:
         """Delete a file by ID."""
         self._http.request_json("DELETE", f"/files/{file_id}")
 
+    def get_thumbnail(self, file_id: str) -> Any:
+        """Get a thumbnail for a file. Returns a streaming ``httpx.Response``."""
+        return self._http.request_stream("GET", f"/files/{file_id}/thumbnail")
+
+    def get_scan_report(self, file_id: str) -> Any:
+        """Get the antivirus scan report for a file."""
+        resp = self._http.request_json("GET", f"/files/{file_id}/scan-report")
+        return resp.get("data") if resp else None
+
 
 class AsyncFilesService:
     """Asynchronous file operations."""
@@ -115,3 +124,10 @@ class AsyncFilesService:
 
     async def delete(self, file_id: str) -> None:
         await self._http.request_json("DELETE", f"/files/{file_id}")
+
+    async def get_thumbnail(self, file_id: str) -> Any:
+        return await self._http.request_stream("GET", f"/files/{file_id}/thumbnail")
+
+    async def get_scan_report(self, file_id: str) -> Any:
+        resp = await self._http.request_json("GET", f"/files/{file_id}/scan-report")
+        return resp.get("data") if resp else None

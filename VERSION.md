@@ -1,11 +1,25 @@
 # Historique des Versions - ConformVault Python SDK
 
 ## Version Actuelle
-**0.5.3** - 2026-03-04
+**0.5.4** - 2026-03-04
 
 ---
 
 ## Versions
+
+### 0.5.4 - 2026-03-04
+**Commit:** `pending`
+**Type:** Patch - Add pagination support to webhooks and keys list methods
+
+### Ajouté
+- `WebhooksService.list()` and `AsyncWebhooksService.list()` now accept optional `page` and `limit` keyword arguments for pagination
+- `KeysService.list()` and `AsyncKeysService.list()` now accept optional `page` and `limit` keyword arguments for pagination
+- Matches the existing pagination pattern already used in `ShareLinksService.list()`
+
+### Tests effectués
+- ✅ `python3 -c "import conformvault"` — success
+
+---
 
 ### 0.5.3 - 2026-03-04
 **Commit:** `pending`

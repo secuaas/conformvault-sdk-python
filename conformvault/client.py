@@ -10,7 +10,7 @@ import httpx
 from .errors import APIError, AuthenticationError, ConformVaultError, RateLimitError
 
 DEFAULT_BASE_URL = "https://api.conformvault.com/dev/v1"
-VERSION = "0.5.3"
+VERSION = "0.5.4"
 USER_AGENT = f"conformvault-python/{VERSION}"
 
 T = TypeVar("T")

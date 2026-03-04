@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List
+from typing import Dict, List
 
 from .client import _AsyncHTTP, _SyncHTTP, _from_dict, _from_dict_list
 from .types import APIKey, CreateAPIKeyRequest, CreateAPIKeyResponse, KeyRevocationStatus
@@ -14,9 +14,15 @@ class KeysService:
     def __init__(self, http: _SyncHTTP) -> None:
         self._http = http
 
-    def list(self) -> List[APIKey]:
+    def list(self, *, page: int = 0, limit: int = 0) -> List[APIKey]:
         """List all API keys for the organization."""
-        resp = self._http.request_json("GET", "/keys")
+        params: Dict[str, str] = {}
+        if page > 0:
+            params["page"] = str(page)
+        if limit > 0:
+            params["limit"] = str(limit)
+
+        resp = self._http.request_json("GET", "/keys", params=params or None)
         return _from_dict_list(APIKey, resp.get("data", []) if resp else [])
 
     def create(self, request: CreateAPIKeyRequest) -> CreateAPIKeyResponse:
@@ -54,8 +60,14 @@ class AsyncKeysService:
     def __init__(self, http: _AsyncHTTP) -> None:
         self._http = http
 
-    async def list(self) -> List[APIKey]:
-        resp = await self._http.request_json("GET", "/keys")
+    async def list(self, *, page: int = 0, limit: int = 0) -> List[APIKey]:
+        params: Dict[str, str] = {}
+        if page > 0:
+            params["page"] = str(page)
+        if limit > 0:
+            params["limit"] = str(limit)
+
+        resp = await self._http.request_json("GET", "/keys", params=params or None)
         return _from_dict_list(APIKey, resp.get("data", []) if resp else [])
 
     async def create(self, request: CreateAPIKeyRequest) -> CreateAPIKeyResponse:

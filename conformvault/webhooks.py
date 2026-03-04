@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import hmac
-from typing import List
+from typing import Dict, List
 
 from .client import _AsyncHTTP, _SyncHTTP, _from_dict, _from_dict_list
 from .types import RegisterWebhookRequest, RegisterWebhookResponse, WebhookDelivery, WebhookEndpoint
@@ -16,9 +16,15 @@ class WebhooksService:
     def __init__(self, http: _SyncHTTP) -> None:
         self._http = http
 
-    def list(self) -> List[WebhookEndpoint]:
+    def list(self, *, page: int = 0, limit: int = 0) -> List[WebhookEndpoint]:
         """List all registered webhook endpoints."""
-        resp = self._http.request_json("GET", "/webhooks")
+        params: Dict[str, str] = {}
+        if page > 0:
+            params["page"] = str(page)
+        if limit > 0:
+            params["limit"] = str(limit)
+
+        resp = self._http.request_json("GET", "/webhooks", params=params or None)
         return _from_dict_list(WebhookEndpoint, resp.get("data", []) if resp else [])
 
     def register(self, request: RegisterWebhookRequest) -> RegisterWebhookResponse:
@@ -59,8 +65,14 @@ class AsyncWebhooksService:
     def __init__(self, http: _AsyncHTTP) -> None:
         self._http = http
 
-    async def list(self) -> List[WebhookEndpoint]:
-        resp = await self._http.request_json("GET", "/webhooks")
+    async def list(self, *, page: int = 0, limit: int = 0) -> List[WebhookEndpoint]:
+        params: Dict[str, str] = {}
+        if page > 0:
+            params["page"] = str(page)
+        if limit > 0:
+            params["limit"] = str(limit)
+
+        resp = await self._http.request_json("GET", "/webhooks", params=params or None)
         return _from_dict_list(WebhookEndpoint, resp.get("data", []) if resp else [])
 
     async def register(self, request: RegisterWebhookRequest) -> RegisterWebhookResponse:

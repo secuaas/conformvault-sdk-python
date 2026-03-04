@@ -1,11 +1,27 @@
 # Historique des Versions - ConformVault Python SDK
 
 ## Version Actuelle
-**0.5.2** - 2026-03-04
+**0.5.3** - 2026-03-04
 
 ---
 
 ## Versions
+
+### 0.5.3 - 2026-03-04
+**Commit:** `pending`
+**Type:** Patch - Add 3 new signature methods (analyze_pdf, preview_pdf, get_embedded_sign_link)
+
+### Ajouté
+- `analyze_pdf()` — Analyze a PDF to detect suggested signature field placements
+- `preview_pdf()` — Download a PDF preview for signature placement
+- `get_embedded_sign_link()` — Get an embedded signing link for a signer
+- New types: `PDFPageDimension`, `PDFFieldSuggestion`, `PDFAnalysisResult`, `AnalyzePDFRequest`, `EmbeddedSignLinkResponse`
+- All 3 methods available in both sync (`SignaturesService`) and async (`AsyncSignaturesService`)
+
+### Tests effectués
+- ✅ `python3 -c "import conformvault"` — success
+
+---
 
 ### 0.5.2 - 2026-03-04
 **Commit:** `pending`

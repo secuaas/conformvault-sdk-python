@@ -157,6 +157,56 @@ class CreateSignatureRequest:
     expiry_days: int = 0
 
 
+@dataclass
+class PDFPageDimension:
+    """Dimensions of a single PDF page."""
+
+    page_number: int = 0
+    width: float = 0.0
+    height: float = 0.0
+
+
+@dataclass
+class PDFFieldSuggestion:
+    """A suggested form field placement on a PDF page."""
+
+    signer_index: int = 0
+    field_type: str = ""
+    page_number: int = 0
+    x: float = 0.0
+    y: float = 0.0
+    width: float = 0.0
+    height: float = 0.0
+    confidence: str = ""
+    label: str = ""
+
+
+@dataclass
+class PDFAnalysisResult:
+    """Result of analyzing a PDF for signature field placement."""
+
+    page_count: int = 0
+    page_dimensions: List[PDFPageDimension] = field(default_factory=list)
+    suggested_fields: List[PDFFieldSuggestion] = field(default_factory=list)
+    detected_labels: Optional[List[str]] = None
+
+
+@dataclass
+class AnalyzePDFRequest:
+    """Input for analyzing a PDF for signature fields."""
+
+    file_id: str = ""
+    signer_count: int = 1
+
+
+@dataclass
+class EmbeddedSignLinkResponse:
+    """Response containing an embedded signing link."""
+
+    sign_link: str = ""
+    envelope_id: str = ""
+
+
 # ---------------------------------------------------------------------------
 # Webhooks
 # ---------------------------------------------------------------------------

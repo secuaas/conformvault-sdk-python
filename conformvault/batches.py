@@ -50,7 +50,18 @@ class BatchesService:
 
     def cancel(self, batch_id: str) -> None:
         """Cancel a batch operation."""
-        self._http.request_json("POST", f"/batches/{batch_id}/cancel")
+        self._http.request_json("DELETE", f"/batches/{batch_id}")
+
+    def upload_file(self, batch_id: str, index: int, file_data: bytes, content_type: str = "application/octet-stream") -> BatchOperation:
+        """Upload a file to a batch operation at the given index."""
+        url = self._http._base_url + f"/batches/{batch_id}/files/{index}"
+        headers = {"Authorization": f"Bearer {self._http._api_key}", "Content-Type": content_type}
+        resp = self._http._client.put(url, content=file_data, headers=headers)
+        if resp.status_code >= 400:
+            from .client import _handle_error_response
+            _handle_error_response(resp)
+        data = resp.json()
+        return _from_dict(BatchOperation, data.get("data") if data else None)
 
 
 class AsyncBatchesService:
@@ -90,4 +101,15 @@ class AsyncBatchesService:
         return _from_dict(BatchOperation, resp.get("data") if resp else None)
 
     async def cancel(self, batch_id: str) -> None:
-        await self._http.request_json("POST", f"/batches/{batch_id}/cancel")
+        await self._http.request_json("DELETE", f"/batches/{batch_id}")
+
+    async def upload_file(self, batch_id: str, index: int, file_data: bytes, content_type: str = "application/octet-stream") -> BatchOperation:
+        """Upload a file to a batch operation at the given index."""
+        url = self._http._base_url + f"/batches/{batch_id}/files/{index}"
+        headers = {"Authorization": f"Bearer {self._http._api_key}", "Content-Type": content_type}
+        resp = await self._http._client.put(url, content=file_data, headers=headers)
+        if resp.status_code >= 400:
+            from .client import _handle_error_response
+            _handle_error_response(resp)
+        data = resp.json()
+        return _from_dict(BatchOperation, data.get("data") if data else None)

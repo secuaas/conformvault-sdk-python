@@ -31,7 +31,7 @@ class RetentionService:
 
     def update(self, policy_id: str, request: UpdateRetentionPolicyRequest) -> RetentionPolicy:
         """Update a retention policy."""
-        resp = self._http.request_json("PATCH", f"/retention-policies/{policy_id}", body=request)
+        resp = self._http.request_json("PUT", f"/retention-policies/{policy_id}", body=request)
         return _from_dict(RetentionPolicy, resp.get("data") if resp else None)
 
     def delete(self, policy_id: str) -> None:
@@ -58,7 +58,7 @@ class AsyncRetentionService:
         return _from_dict(RetentionPolicy, resp.get("data") if resp else None)
 
     async def update(self, policy_id: str, request: UpdateRetentionPolicyRequest) -> RetentionPolicy:
-        resp = await self._http.request_json("PATCH", f"/retention-policies/{policy_id}", body=request)
+        resp = await self._http.request_json("PUT", f"/retention-policies/{policy_id}", body=request)
         return _from_dict(RetentionPolicy, resp.get("data") if resp else None)
 
     async def delete(self, policy_id: str) -> None:

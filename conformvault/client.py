@@ -10,7 +10,7 @@ import httpx
 from .errors import APIError, AuthenticationError, ConformVaultError, RateLimitError
 
 DEFAULT_BASE_URL = "https://api.conformvault.com/dev/v1"
-VERSION = "0.5.0"
+VERSION = "0.5.1"
 USER_AGENT = f"conformvault-python/{VERSION}"
 
 T = TypeVar("T")
@@ -303,6 +303,8 @@ from .upload_sessions import AsyncUploadSessionsService, UploadSessionsService  
 from .jobs import AsyncJobsService, JobsService  # noqa: E402
 from .activity_subscriptions import AsyncActivitySubscriptionsService, ActivitySubscriptionsService  # noqa: E402
 from .policies import AsyncPoliciesService, PoliciesService  # noqa: E402
+from .bandwidth import AsyncBandwidthService, BandwidthService  # noqa: E402
+from .data_export import AsyncDataExportService, DataExportService  # noqa: E402
 
 
 class ConformVault:
@@ -351,6 +353,8 @@ class ConformVault:
         self.jobs = JobsService(self._http)
         self.activity_subscriptions = ActivitySubscriptionsService(self._http)
         self.policies = PoliciesService(self._http)
+        self.bandwidth = BandwidthService(self._http)
+        self.data_export = DataExportService(self._http)
 
     def close(self) -> None:
         """Close the underlying HTTP client."""
@@ -409,6 +413,8 @@ class AsyncConformVault:
         self.jobs = AsyncJobsService(self._http)
         self.activity_subscriptions = AsyncActivitySubscriptionsService(self._http)
         self.policies = AsyncPoliciesService(self._http)
+        self.bandwidth = AsyncBandwidthService(self._http)
+        self.data_export = AsyncDataExportService(self._http)
 
     async def close(self) -> None:
         """Close the underlying async HTTP client."""

@@ -618,6 +618,7 @@ class Comment:
 class CreateCommentRequest:
     """Input for creating a comment."""
 
+    file_id: str = ""
     content: str = ""
     parent_id: Optional[str] = None
 
@@ -791,3 +792,46 @@ class SetEncryptionSaltRequest:
     """Input for setting encryption salt."""
 
     salt: str = ""
+
+
+# ---------------------------------------------------------------------------
+# Bandwidth Analytics
+# ---------------------------------------------------------------------------
+
+@dataclass
+class BandwidthSummary:
+    """Bandwidth usage summary."""
+    total_upload_bytes: int = 0
+    total_download_bytes: int = 0
+    period: str = ""
+
+@dataclass
+class DailyBandwidthStats:
+    """Daily bandwidth statistics."""
+    date: str = ""
+    upload_bytes: int = 0
+    download_bytes: int = 0
+
+# ---------------------------------------------------------------------------
+# Key Revocation
+# ---------------------------------------------------------------------------
+
+@dataclass
+class KeyRevocationStatus:
+    """API key revocation status."""
+    key_id: str = ""
+    revoked: bool = False
+    revoked_at: Optional[str] = None
+
+# ---------------------------------------------------------------------------
+# Data Export
+# ---------------------------------------------------------------------------
+
+@dataclass
+class UserDataExport:
+    """User data export package (GDPR/Loi 25)."""
+    user_id: str = ""
+    status: str = ""
+    url: Optional[str] = None
+    expires_at: Optional[str] = None
+    created_at: str = ""

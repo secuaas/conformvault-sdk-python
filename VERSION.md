@@ -1,11 +1,37 @@
 # Historique des Versions - ConformVault Python SDK
 
 ## Version Actuelle
-**0.5.0** - 2026-03-04
+**0.5.1** - 2026-03-04
 
 ---
 
 ## Versions
+
+### 0.5.1 - 2026-03-04
+**Commit:** `pending`
+**Type:** Patch - Fix 9 route mismatches + add 6 missing routes (backend alignment)
+
+### Corrigé
+- **Policies**: `/policies/ip` → `/ip-policy`, `/policies/mfa` → `/mfa-policy`, `/policies/encryption-salt` → `/encryption/salt`
+- **Activity Subscriptions**: `/activity/subscriptions` → `/activity-subscriptions`
+- **Comments**: Rewritten from nested `/files/{id}/comments` to flat `/comments` routes; `file_id` moved to request body/query param; update changed from PATCH to PUT
+- **Jobs Cancel**: `POST /jobs/{id}/cancel` → `DELETE /jobs/{id}`
+- **Batches Cancel**: `POST /batches/{id}/cancel` → `DELETE /batches/{id}`
+- **Retention Update**: PATCH → PUT
+
+### Ajouté
+- **`bandwidth.py`**: `BandwidthService` / `AsyncBandwidthService` — get_summary, get_daily (2 methods each)
+- **`data_export.py`**: `DataExportService` / `AsyncDataExportService` — export (1 method each) for GDPR/Loi 25
+- **`keys.py`**: instant_revoke, get_revocation_status (2 new methods via `/api-keys/` path, sync+async)
+- **`batches.py`**: upload_file (1 new method, sync+async)
+- New types: `BandwidthSummary`, `DailyBandwidthStats`, `KeyRevocationStatus`, `UserDataExport`
+- `file_id` field added to `CreateCommentRequest`
+- Total services: 27 → 29
+
+### Tests effectués
+- ✅ `python3 -c "import conformvault"` — success
+
+---
 
 ### 0.5.0 - 2026-03-04
 **Commit:** `pending`

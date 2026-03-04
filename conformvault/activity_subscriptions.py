@@ -16,17 +16,17 @@ class ActivitySubscriptionsService:
 
     def subscribe(self, request: CreateActivitySubscriptionRequest) -> ActivitySubscription:
         """Create an activity subscription."""
-        resp = self._http.request_json("POST", "/activity/subscriptions", body=request)
+        resp = self._http.request_json("POST", "/activity-subscriptions", body=request)
         return _from_dict(ActivitySubscription, resp.get("data") if resp else None)
 
     def list(self) -> List[ActivitySubscription]:
         """List all activity subscriptions."""
-        resp = self._http.request_json("GET", "/activity/subscriptions")
+        resp = self._http.request_json("GET", "/activity-subscriptions")
         return _from_dict_list(ActivitySubscription, resp.get("data", []) if resp else [])
 
     def unsubscribe(self, subscription_id: str) -> None:
         """Delete an activity subscription."""
-        self._http.request_json("DELETE", f"/activity/subscriptions/{subscription_id}")
+        self._http.request_json("DELETE", f"/activity-subscriptions/{subscription_id}")
 
 
 class AsyncActivitySubscriptionsService:
@@ -36,12 +36,12 @@ class AsyncActivitySubscriptionsService:
         self._http = http
 
     async def subscribe(self, request: CreateActivitySubscriptionRequest) -> ActivitySubscription:
-        resp = await self._http.request_json("POST", "/activity/subscriptions", body=request)
+        resp = await self._http.request_json("POST", "/activity-subscriptions", body=request)
         return _from_dict(ActivitySubscription, resp.get("data") if resp else None)
 
     async def list(self) -> List[ActivitySubscription]:
-        resp = await self._http.request_json("GET", "/activity/subscriptions")
+        resp = await self._http.request_json("GET", "/activity-subscriptions")
         return _from_dict_list(ActivitySubscription, resp.get("data", []) if resp else [])
 
     async def unsubscribe(self, subscription_id: str) -> None:
-        await self._http.request_json("DELETE", f"/activity/subscriptions/{subscription_id}")
+        await self._http.request_json("DELETE", f"/activity-subscriptions/{subscription_id}")

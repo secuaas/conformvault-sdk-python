@@ -31,7 +31,7 @@ class JobsService:
 
     def cancel(self, job_id: str) -> None:
         """Cancel a running job."""
-        self._http.request_json("POST", f"/jobs/{job_id}/cancel")
+        self._http.request_json("DELETE", f"/jobs/{job_id}")
 
 
 class AsyncJobsService:
@@ -53,4 +53,4 @@ class AsyncJobsService:
         return _from_dict(Job, resp.get("data") if resp else None)
 
     async def cancel(self, job_id: str) -> None:
-        await self._http.request_json("POST", f"/jobs/{job_id}/cancel")
+        await self._http.request_json("DELETE", f"/jobs/{job_id}")

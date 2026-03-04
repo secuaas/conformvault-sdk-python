@@ -32,6 +32,7 @@ from .types import (
     AuditAnomaly,
     AuditEntry,
     AuditStats,
+    BandwidthSummary,
     BatchOperation,
     BatchOperationItem,
     Comment,
@@ -47,6 +48,7 @@ from .types import (
     CreateSignatureRequest,
     CreateSignatureSigner,
     CreateUploadSessionRequest,
+    DailyBandwidthStats,
     DataResponse,
     DocumentTemplate,
     EncryptionSalt,
@@ -60,6 +62,7 @@ from .types import (
     GeneratedDocument,
     IPPolicy,
     Job,
+    KeyRevocationStatus,
     LegalHold,
     LegalHoldFile,
     ListResponse,
@@ -86,6 +89,7 @@ from .types import (
     UpdateRetentionPolicyRequest,
     UploadResult,
     UploadSession,
+    UserDataExport,
     WebhookDelivery,
     WebhookEndpoint,
 )
@@ -192,6 +196,13 @@ __all__ = [
     # Types — Encryption Salt
     "EncryptionSalt",
     "SetEncryptionSaltRequest",
+    # Types — Bandwidth
+    "BandwidthSummary",
+    "DailyBandwidthStats",
+    # Types — Key Revocation
+    "KeyRevocationStatus",
+    # Types — Data Export
+    "UserDataExport",
     # Types — Generic
     "ListResponse",
     "DataResponse",

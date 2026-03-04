@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import List
 
 from .client import _AsyncHTTP, _SyncHTTP, _from_dict, _from_dict_list
-from .types import APIKey, CreateAPIKeyRequest, CreateAPIKeyResponse
+from .types import APIKey, CreateAPIKeyRequest, CreateAPIKeyResponse, KeyRevocationStatus
 
 
 class KeysService:
@@ -38,6 +38,15 @@ class KeysService:
         resp = self._http.request_json("POST", f"/keys/{key_id}/rotate")
         return _from_dict(CreateAPIKeyResponse, resp.get("data") if resp else None)
 
+    def instant_revoke(self, key_id: str) -> None:
+        """Instantly revoke an API key via Redis."""
+        self._http.request_json("POST", f"/api-keys/{key_id}/revoke")
+
+    def get_revocation_status(self, key_id: str) -> KeyRevocationStatus:
+        """Check the revocation status of an API key."""
+        resp = self._http.request_json("GET", f"/api-keys/{key_id}/revocation-status")
+        return _from_dict(KeyRevocationStatus, resp.get("data") if resp else None)
+
 
 class AsyncKeysService:
     """Asynchronous API key self-management."""
@@ -63,3 +72,12 @@ class AsyncKeysService:
     async def rotate(self, key_id: str) -> CreateAPIKeyResponse:
         resp = await self._http.request_json("POST", f"/keys/{key_id}/rotate")
         return _from_dict(CreateAPIKeyResponse, resp.get("data") if resp else None)
+
+    async def instant_revoke(self, key_id: str) -> None:
+        """Instantly revoke an API key via Redis."""
+        await self._http.request_json("POST", f"/api-keys/{key_id}/revoke")
+
+    async def get_revocation_status(self, key_id: str) -> KeyRevocationStatus:
+        """Check the revocation status of an API key."""
+        resp = await self._http.request_json("GET", f"/api-keys/{key_id}/revocation-status")
+        return _from_dict(KeyRevocationStatus, resp.get("data") if resp else None)

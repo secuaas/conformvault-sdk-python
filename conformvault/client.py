@@ -129,13 +129,31 @@ class _SyncHTTP:
         return resp.json()
 
     def request_stream(self, method: str, path: str) -> httpx.Response:
-        """Execute an HTTP request, return the raw streaming response."""
+        """Execute an HTTP request, return the raw streaming response.
+
+        Caller is responsible for reading and closing the returned response.
+        """
         url = self._base_url + path
-        resp = self._client.stream(method, url, headers=_build_headers(self._api_key))
-        # We need to return the context-managed response; caller is responsible for closing.
-        # Use send() instead so we can return a non-context-managed response.
         req = self._client.build_request(method, url, headers=_build_headers(self._api_key))
         resp = self._client.send(req, stream=True)
+        if resp.status_code >= 400:
+            resp.read()
+            resp.close()
+            _handle_error_response(resp)
+        return resp
+
+    def request_stream_with_body(self, method: str, path: str, body: Any = None) -> httpx.Response:
+        """Execute request with a JSON body and return raw streaming response.
+
+        Caller must close the response when done.
+        """
+        url = self._base_url + path
+        headers = _build_headers(self._api_key)
+        json_body = _serialize_body(body) if body is not None else None
+        resp = self._client.send(
+            self._client.build_request(method, url, json=json_body, headers=headers),
+            stream=True,
+        )
         if resp.status_code >= 400:
             resp.read()
             resp.close()
@@ -201,9 +219,31 @@ class _AsyncHTTP:
         return resp.json()
 
     async def request_stream(self, method: str, path: str) -> httpx.Response:
+        """Execute an async HTTP request, return the raw streaming response.
+
+        Caller is responsible for reading and closing the returned response.
+        """
         url = self._base_url + path
         req = self._client.build_request(method, url, headers=_build_headers(self._api_key))
         resp = await self._client.send(req, stream=True)
+        if resp.status_code >= 400:
+            await resp.aread()
+            await resp.aclose()
+            _handle_error_response(resp)
+        return resp
+
+    async def request_stream_with_body(self, method: str, path: str, body: Any = None) -> httpx.Response:
+        """Execute async request with a JSON body and return raw streaming response.
+
+        Caller must close the response when done.
+        """
+        url = self._base_url + path
+        headers = _build_headers(self._api_key)
+        json_body = _serialize_body(body) if body is not None else None
+        resp = await self._client.send(
+            self._client.build_request(method, url, json=json_body, headers=headers),
+            stream=True,
+        )
         if resp.status_code >= 400:
             await resp.aread()
             await resp.aclose()

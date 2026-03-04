@@ -49,7 +49,7 @@ asyncio.run(main())
 
 ## Services
 
-The SDK provides 7 service clients matching the ConformVault Developer API:
+The SDK provides 27 service clients matching the ConformVault Developer API:
 
 | Service | Description | Attribute |
 |---------|-------------|-----------|
@@ -58,8 +58,28 @@ The SDK provides 7 service clients matching the ConformVault Developer API:
 | **Share Links** | Create and manage share links | `client.share_links` |
 | **Signatures** | Electronic signature envelopes | `client.signatures` |
 | **Webhooks** | Register and manage webhook endpoints | `client.webhooks` |
-| **Audit** | Query audit log entries | `client.audit` |
+| **Audit** | Query, search, and export audit logs | `client.audit` |
 | **Keys** | API key self-management | `client.keys` |
+| **Bulk** | Bulk delete, move, download (ZIP) | `client.bulk` |
+| **Versions** | File version history | `client.versions` |
+| **Search** | Unified search across files and folders | `client.search` |
+| **Trash** | Trash management (list, restore, delete, empty) | `client.trash` |
+| **Scan Reports** | File scan reports and summaries | `client.scan_reports` |
+| **Attestation** | Compliance attestation (Loi 25 PDF) | `client.attestation` |
+| **Transactions** | Transaction folders and items | `client.transactions` |
+| **Templates** | Document templates and PDF generation | `client.templates` |
+| **Batches** | Batch operations | `client.batches` |
+| **Metadata** | File metadata and tags | `client.metadata` |
+| **Retention** | Retention policies | `client.retention` |
+| **Legal Holds** | Legal hold management | `client.legal_holds` |
+| **Permissions** | Folder permissions | `client.permissions` |
+| **Comments** | File comments | `client.comments` |
+| **Quota** | Storage quota | `client.quota` |
+| **Rate Limit** | Rate limit status | `client.rate_limit` |
+| **Upload Sessions** | Chunked uploads | `client.upload_sessions` |
+| **Jobs** | Background jobs | `client.jobs` |
+| **Activity Subscriptions** | Activity subscriptions | `client.activity_subscriptions` |
+| **Policies** | Security policies (IP, MFA, encryption) | `client.policies` |
 
 ## Files
 

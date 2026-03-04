@@ -74,23 +74,7 @@ class TemplatesService:
         body: Dict[str, Any] = {"data": data}
         if filename is not None:
             body["filename"] = filename
-        resp = self._http.request_stream("POST", f"/templates/{template_id}/generate")
-        # request_stream requires manual body handling — use request_json fallback
-        # Actually, we need the raw binary. Use the stream path.
-        # Re-implement: build request manually for POST with body + stream response.
-        from .client import _build_headers, _handle_error_response, _serialize_body
-        import httpx
-        url = self._http._base_url + f"/templates/{template_id}/generate"
-        req = self._http._client.build_request(
-            "POST", url,
-            json=_serialize_body(body),
-            headers=_build_headers(self._http._api_key),
-        )
-        resp = self._http._client.send(req, stream=True)
-        if resp.status_code >= 400:
-            resp.read()
-            resp.close()
-            _handle_error_response(resp)
+        resp = self._http.request_stream_with_body("POST", f"/templates/{template_id}/generate", body=body)
         try:
             return resp.read()
         finally:
@@ -163,18 +147,7 @@ class AsyncTemplatesService:
         body: Dict[str, Any] = {"data": data}
         if filename is not None:
             body["filename"] = filename
-        from .client import _build_headers, _handle_error_response, _serialize_body
-        url = self._http._base_url + f"/templates/{template_id}/generate"
-        req = self._http._client.build_request(
-            "POST", url,
-            json=_serialize_body(body),
-            headers=_build_headers(self._http._api_key),
-        )
-        resp = await self._http._client.send(req, stream=True)
-        if resp.status_code >= 400:
-            await resp.aread()
-            await resp.aclose()
-            _handle_error_response(resp)
+        resp = await self._http.request_stream_with_body("POST", f"/templates/{template_id}/generate", body=body)
         try:
             return await resp.aread()
         finally:

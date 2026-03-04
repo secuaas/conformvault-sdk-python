@@ -27,3 +27,17 @@ htmlcov/
 .DS_Store
 Thumbs.db
 .security-reviewed
+
+# Claude Code internal tooling
+.claude/
+
+# Internal project tracking
+WORK_IN_PROGRESS.md
+
+# Environment and secrets
+*.env
+.env.*
+*.key
+*.pem
+*.p12
+credentials.json

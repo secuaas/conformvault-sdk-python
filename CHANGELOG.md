@@ -5,6 +5,12 @@ All notable changes to the ConformVault Python SDK will be documented in this fi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.2] - 2026-03-04
+
+### Added
+- 110 unit tests using pytest — covers sync+async for all 29 services
+- Test infrastructure with httpx mock transport
+
 ## [0.5.1] - 2026-03-04
 
 ### Fixed

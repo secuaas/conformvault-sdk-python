@@ -1,11 +1,25 @@
 # Historique des Versions - ConformVault Python SDK
 
 ## Version Actuelle
-**0.5.1** - 2026-03-04
+**0.5.2** - 2026-03-04
 
 ---
 
 ## Versions
+
+### 0.5.2 - 2026-03-04
+**Commit:** `pending`
+**Type:** Patch - Add unit tests (110 tests via pytest)
+
+### Ajouté
+- 110 unit tests using pytest — covers sync+async for all services
+- Test infrastructure with httpx mock transport
+
+### Tests effectués
+- ✅ `python3 -c "import conformvault"` — success
+- ✅ `pytest` — 110 tests passing
+
+---
 
 ### 0.5.1 - 2026-03-04
 **Commit:** `pending`
